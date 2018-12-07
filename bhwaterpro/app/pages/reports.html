@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+reports.html
+-->
+<html lang="en">
+    <head>
+        <title>BH Water Project</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../public/css/main.css">
+    </head>
+    <body>
+        <h1>Reports</h1>
+        <ul>
+            <li><a href="/">BH Water Admin.</a></li>
+        </ul>
+        <hr>
+        <div id="bhWlRep" ng-app="bhApp" ng-controller="bhListController">
+            <div>
+                <input type="button" value="View" id="btnBhV" ng-click="bhwlView()">
+                <input type="button" value="Charts" id="btnBhC" ng-click="bhwlCharts()">
+            </div>
+            <div id="bhwlDv">
+                <div>{{ message }}</div>
+                <hr>
+                <table id="bhlst">
+                <tr>
+                    <th>#######</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Reading</th>
+                </tr>
+                <tr ng-repeat = "bh2 in boreholesWl">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ bh2.name }}</td>
+                    <td>{{ bh2.date }}</td>
+                    <td>{{ bh2.reading }}</td>
+                </tr>
+                </table>
+                <hr>
+            </div>
+        </div>
+        
+        <script src="../lib/angular/angular.js"></script>
+        <script src="../lib/angular/angular-resource.js"></script>
+        <script src="../lib/jquery/jquery.js"></script>
+        <script src="../lib/bootstrap/bootstrap.js"></script>
+        <script src="../js/reports.js"></script>
+    </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!--
+index.html
+-->
+<html lang="en">
+    <head>
+        <title>BH Water Project</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../public/css/main.css">
+    </head>
+    <body ng-app="bhApp">
+        <h1> Bh Water App. </h1>
+        <div id="more" class="container">
+            <ul class="nav">
+                <li><a href="#btnBhV">List of all boreholes.</a></li>
+                <li><a href="#frmBh">Create new boreholes.</a></li>
+                <li><a href="#frmBh">Update boreholes.</a></li>
+                <li><a href="#frmDbh">Delete boreholes</a></li>
+                <li><a href="#frmBhWl">Create water levels for a boreholes.</a></li>
+                <li><a href="#frmBhWl">Update water levels for a borehole</a></li>
+                <li><a href="#frmDbhwl">Delete water levels for a borehole</a></li>
+                <li><a href="/reports">Reports</a></li>
+                <li><a href="/reports">Charts</a></li>
+            </ul>
+        </div>
+        <hr>
+        <div>
+            <a href="#help"><input type="button" id="btnHelp" value="Help"/></a>
+            <a href="#info"><input type="button" id="btnInfo" value="Info" /></a>
+            <a href="/reports"><input type="button" id="btnCharts" value="Charts" /></a>
+            <a href="/reports"><input type="button" id="btnReports" value="Reports" /></a>
+            <a href="#bmore"><input type="button" id="btnbMore" value="More" /></a>
+        </div>
+        <hr>
+        <div ng-controller="bhListController">
+            <form title="Borehole" id="frmBh">
+                <fieldset> 
+                <legend>Borehole</legend>
+                <br>
+                <label id="lblFrmBh"></label><br>
+                Name:
+                <input type="text" id="txbNamefrmBh" name="txbNamefrmBh" ng-model="name" required><br>
+                <br> Type:
+                <input type="text" id="txbTypefrmBh" name="type" ng-model="type" required><br>
+                <br> Latitude:
+                <input type="text" name="latitude" ng-model="latitude" minlength="6" required><br>
+                <br> Longitude:
+                <input type="text" name="longitude" ng-model="longitude" minlength="6" required><br>
+                <br> Elevation:
+                <input type="number" name="elevation" ng-model="elevation" required><br>
+                <br>
+                <input type="submit" value="Submit" id="btnBh1" ng-click="bhSubmit()">
+                <br>
+                <input type="submit" value="Update" id="btnBh2" ng-click="bhUpdate()">
+                <br>
+                </fieldset>
+            </form>
+            <hr>
+            <form id="frmBhWl" title="BH Water Level">
+                <fieldset>
+                <legend>BH Water Level</legend>
+                Name:
+                <input type="text" id="txtbhnamewl" name="name" ng-model="name" readonly="true" required="true"><br>
+                <br>
+                BH Name:
+                <select name="selbhwl" id="selbhwl">
+                    <option ng-repeat="bhwl in boreholes" selected="selected" value= "{{ bhwl.name }}">
+                        {{ bhwl.name }}
+                    </option>
+                </select><br>
+                <br> <label id="lblDatebhwl"></label>
+                <br> Date:
+                <input type="datetime" name="date" id="bhwdate" ng-model="date" required><br>
+                <br> Reading:
+                <input type="number" name="reading" ng-model="reading" required><br>
+                <br>
+                <input type="submit" value="Submit" id="btnBh1wl" ng-click="bhwlSubmit()">
+                <br>
+                <input type="submit" value="Update" id="btnBh2wl" ng-click="bhwlUpdate()">
+                <br>
+                </fieldset>
+            </form>
+            <hr>
+            <form id="frmDbh" title="Delete borehole">
+                <fieldset>
+                    <legend>BH Delete</legend>
+                    <br>
+                    <label id="lblbhDelfrmDbh"></label><br>
+                    Name:
+                    <input type="text" id="txbdbhnameDel" name="dbhname" ng-model="bhDname" readonly="true" required><br>
+                    <br>
+                    BH Name:
+                    <select name="selbhDel" id="selbhDel">
+                    <option ng-repeat="bhDel in boreholes" selected="selected" value="{{ bhDel.name }}">
+                        {{ bhDel.name }}
+                    </option>
+                    </select><br>
+                    <br>
+                    <input type="submit" value="Delete" ng-click="bhDelete()">
+                    <br>
+                </fieldset>
+            </form>
+            <hr>
+            <form id="frmDbhwl" title="Delete borehole water level">
+                <fieldset>
+                    <legend>BH Water level Delete</legend>
+                    Name:
+                    <input type="text" id="txbbhwlnameDel" name="dbhwlname" ng-model="wlDname" readonly="true" required><br>
+                    <br>
+                    BH Name:
+                    <select name="selbhwlDel" id="selbhwlDel">
+                        <option  ng-repeat="bhwlD in boreholes" selected="selected" value= "{{ bhwlD.name }}">
+                            {{ bhwlD.name }}
+                        </option>
+                    </select><br>
+                    <br>
+                    <input type="submit" value="Delete" ng-click="bhwlDelete()">
+                    <br>
+                </fieldset>
+            </form>
+            <hr>
+            <input type="button" value="View" id="btnBhV" ng-click="bhlView()">
+            <div>{{ message }}</div>
+            <hr>
+            <table id="bhlst">
+                <tr>
+                    <th>#######</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Elevation</th>
+                </tr>
+                <tr ng-repeat = "bh2 in boreholes">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ bh2.name }}</td>
+                    <td>{{ bh2.type }}</td>
+                    <td>{{ bh2.latitude }}</td>
+                    <td>{{ bh2.longitude }}</td>
+                    <td>{{ bh2.elevation }}</td>
+                    <td>
+                      <input type="submit" value="Update" ng-click="bhlUpdate(bh2)">  
+                    </td>
+                    <td>
+                      <input type="submit" value="Delete" ng-click="bhlDelete(bh2)">  
+                    </td>
+                </tr>
+            </table>
+            <hr>
+            <select name="dbhsel" id="dbhsel">
+                <option ng-repeat="bh3 in boreholes" value='{{ bh3.name }}'>
+                    {{ bh3.name }}
+                </option>
+            </select>
+            <select name="dbhsel2" id="dbhsel2">
+                <option ng-repeat="bh4 in boreholes" value='{{ bh4.type }}'>
+                    {{ bh4.type }}
+                </option>
+            </select><br>
+            <br>
+            <hr>
+            <div id="bhWlRep">
+            <div>
+                Search:
+                <input ng-model="bhquery" name="txbQ" id="txbQ">
+                Sort by:
+                <select ng-model="sortd" name="bhwlsel" id="bhwlsel">
+                    <option value="name">Name</option>
+                    <option value="type">Type</option>
+                </select>
+                <input type="button" value="View" id="btnBhV" ng-click="bhslView()">
+            </div>
+            <div>{{ boreholes }}</div>    
+            <div>{{ message2 }}</div>
+            <hr>
+            <table id="bhwlst">
+                <tr>
+                    <th>#######</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Elevation</th>
+                </tr>
+                <tr ng-repeat = "bh2 in boreholes | filter:bhquery | orderBy:sortd">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ bh2.name }}</td>
+                    <td>{{ bh2.type }}</td>
+                    <td>{{ bh2.latitude }}</td>
+                    <td>{{ bh2.longitude }}</td>
+                    <td>{{ bh2.elevation }}</td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+        </div>
+        
+        
+        
+        <div id="info">
+            <img src="../public/assets/wgs84.jpg" alt="wgs84"><br>
+            <img src="../public/assets/elevation.jpg" alt="elevation"><br>
+        </div>
+        <div id="help">
+            <img src="../public/assets/elevation2.jpg" alt="elevation3"><br>
+            <img src="../public/assets/wgs84map.jpg" alt="wgs84m"><br>
+        </div>
+        <hr>
+        <div id="bmore">
+            <a href="#more"><input type="button" id="btnMore" value="More" /></a>
+        </div>
+        <hr>
+        <br>
+        <script src="../lib/angular/angular.js"></script>
+        <script src="../lib/angular/angular-resource.js"></script>
+        <script src="../lib/jquery/jquery.js"></script>
+        <script src="../lib/bootstrap/bootstrap.js"></script>
+        <script src="../js/app.js"></script>
+    </body>
+</html>

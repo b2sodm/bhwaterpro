@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+bhcharts.html
+-->
+<html>
+    <head>
+        <title>BH Water Charts</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../public/css/main.css">
+        <script src="../lib/charts/Chart.bundle.js"></script>
+        <script src="../lib/jquery/jquery.js"></script>
+        <script src="../js/bhcharts.js"></script>
+    </head>
+    <body>
+        <h1>Charts</h1>
+        <ol>
+            <li><a href="/">BH Water Admin.</a></li>
+            <li><a href="/reports">Reports.</a></li>
+        </ol>
+        <hr>
+        <div>
+            Charts
+            <div id="bmore">
+                <a href="#bhwl">
+                    <input type="button" id="btnCharts" value="More">
+                </a>
+                <br><label id="lblData"></label><br>
+            </div>
+        </div>
+        <hr>
+        <br>
+        <div id="myCan">
+            <canvas id="myChart" width="100" height="100"></canvas>
+        </div>
+        <br>
+        <div id="bhwl">
+            <a href="#bmore">
+               <input type="button" id="btnChart" value="More"></div> 
+            </a>
+        <br><br><hr><br><br>
+    </body>
+</html>
